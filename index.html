@@ -13,20 +13,23 @@
             <h1>Welcome to my library</h1>
             <div id="library">
                 <div id="books">
+                    <div id="new-book-div" class="book">
+                        <p>+</p>
+                    </div>
                 </div>
             </div>
             <div id="form-div">
-                <button id="btn-new">Add New Book</button>
-                <form id='form' target="body">
-                    <label for="title">Title: </label>
-                    <input id="new-title" type="text" name="title" value="" required><br>
-                    <label for="author">Author: </label>
-                    <input id="new-author" type="text" name="author" value="" required><br>
+                
+                <form id='form' autocomplete='off'>
+                    <p>Add a new book</p>
+                    <input id="new-title" type="text" name="title" placeholder="Title" required><br>
+                    <input id="new-author" type="text" name="author" placeholder="Author" required><br>
                     <label for="pages">Number of Pages: </label>
-                    <input id="new-pages" type="text" name="pages" value="" required><br>
+                    <input id="new-pages" type="text" name="pages" placeholder="120" size="7" required><br>
                     <label for="read">Finished reading? </label>
-                    <input id="new-read" type="checkbox" name="read" value="" required><br>
+                    <input id="new-read" type="checkbox" name="read" value=""><br>
                     <button id='btn-submit'>Add</button>
+                    <button id='btn-cancel'>Cancel</button>
                 </form>
             </div>
         </div>

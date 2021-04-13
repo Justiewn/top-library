@@ -1,8 +1,10 @@
 let myLibrary = [];
 
 const bookcase = document.querySelector("#books");
-const buttonNew = document.querySelector("#btn-new");
+const newBookDiv = document.querySelector("#new-book-div");
 const form = document.querySelector("#form");
+const cancelButton = document.querySelector("#btn-cancel");
+const input = form.elements;
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -36,7 +38,7 @@ function displayBook(book) {
     newBookTitle.style.fontWeight = 'bold';
 
     newBook.classList.add('book');
-    bookcase.appendChild(newBook);
+    bookcase.insertBefore(newBook, newBookDiv);
     newBook.appendChild(newBookTitle);
     newBook.appendChild(newBookInfo);
 }
@@ -52,14 +54,17 @@ function clearForm(formElements) {
     formElements[3].checked = false;
 }
 
+function hideForm(input) {
+    clearForm(input);
+    form.style.visibility = 'hidden';
+}
 
-buttonNew.addEventListener('click', () => {
+newBookDiv.addEventListener('click', () => {
     form.style.visibility = 'visible';
 })
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    input = form.elements;
     title = input[0].value;
     author = input[1].value;
     pages = input[2].value;
@@ -67,9 +72,34 @@ form.addEventListener("submit", (e) => {
     let newBook = new Book(title, author, pages, read)
     addBook(newBook);
     displayBook(newBook);
-    clearForm(input);
-    form.style.visibility = 'hidden';
+    hideForm(input);
 })
+
+cancelButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    hideForm(input);
+})
+
+setInputFilter(document.getElementById("new-pages"), function(value) {
+    return /^\d*$/.test(value); 
+  });
+
+function setInputFilter(textbox, inputFilter) {
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+      textbox.addEventListener(event, function() {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          this.value = "";
+        }
+      });
+    });
+  }
 
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
