@@ -1,0 +1,92 @@
+body {
+    height: 100vh;
+}
+
+#content-div {
+    height: 100vh;
+}
+
+
+#library {
+    padding: 10px;
+}
+
+#books {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+#new-book-div {
+    border: 2px solid gray;
+    box-shadow: 0 0 2px 1px gray;
+}
+
+#new-book-div:hover {
+    box-shadow: 0 0 5px 3px gray;
+    font-size: 90px;
+}
+
+#new-book-div p {
+    font-size: 40px;
+}
+
+.book {
+    border: 2px solid black;
+    margin: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    padding: 5px 5px;
+    text-align: center;
+    white-space: pre-wrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+
+    width: 20%;
+    max-width: 120px;
+
+    height: 80%;
+    min-height: 160px;
+    max-height: 200px;
+    box-shadow: 0 0 3px 1px black;
+}
+
+.book:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px 3px black;
+    white-space: pre-line;
+}
+
+#form-div {
+    display: flex;  
+    justify-content: center;
+}
+
+
+#form {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid black;
+    display: block;
+    visibility: hidden;
+}
+
+#form p {
+    font-weight: bold;
+    text-align: center;
+    margin: 5px;
+}
+
+input[type=number] {
+    width: 80px;
+}
+
+#btn-submit {
+    float:right;
+}
+
+.btn-remove {
+    width: 24px;
+}

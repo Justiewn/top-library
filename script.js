@@ -31,16 +31,21 @@ function displayBook(book) {
     const newBook = document.createElement('div');
     const newBookTitle = document.createElement('div');
     const newBookInfo = document.createElement('div');
+    const buttonRemoveBook = document.createElement('button');
 
     newBookTitle.textContent = book.getTitle();
     newBookInfo.textContent = book.info();
+    buttonRemoveBook.textContent = 'x';
+    buttonRemoveBook.classList.add('btn-remove');
 
     newBookTitle.style.fontWeight = 'bold';
 
     newBook.classList.add('book');
+    newBook.setAttribute("data-value", `${myLibrary.indexOf(book)}`)
     bookcase.insertBefore(newBook, newBookDiv);
     newBook.appendChild(newBookTitle);
     newBook.appendChild(newBookInfo);
+    newBook.appendChild(buttonRemoveBook);
 }
 
 function initialDisplay() {
@@ -63,6 +68,13 @@ newBookDiv.addEventListener('click', () => {
     form.style.visibility = 'visible';
 })
 
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-remove")) {
+        console.log("hey");
+    }
+    return;
+})
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     title = input[0].value;
@@ -79,27 +91,6 @@ cancelButton.addEventListener("click", (e) => {
     e.preventDefault();
     hideForm(input);
 })
-
-/* setInputFilter(document.getElementById("new-pages"), function(value) {
-    return /^\d*$/.test(value); 
-  });
-
-function setInputFilter(textbox, inputFilter) {
-    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-      textbox.addEventListener(event, function() {
-        if (inputFilter(this.value)) {
-          this.oldValue = this.value;
-          this.oldSelectionStart = this.selectionStart;
-          this.oldSelectionEnd = this.selectionEnd;
-        } else if (this.hasOwnProperty("oldValue")) {
-          this.value = this.oldValue;
-          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-        } else {
-          this.value = "";
-        }
-      });
-    });
-  } */
 
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
