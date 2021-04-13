@@ -80,7 +80,7 @@ cancelButton.addEventListener("click", (e) => {
     hideForm(input);
 })
 
-setInputFilter(document.getElementById("new-pages"), function(value) {
+/* setInputFilter(document.getElementById("new-pages"), function(value) {
     return /^\d*$/.test(value); 
   });
 
@@ -99,7 +99,7 @@ function setInputFilter(textbox, inputFilter) {
         }
       });
     });
-  }
+  } */
 
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
