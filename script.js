@@ -33,6 +33,7 @@ Book.prototype.getRead = function() {
 
 function addBook(book) {
     myLibrary.push(book);
+    localSave();
 }
 
 function displayBook(book) {
@@ -42,6 +43,8 @@ function displayBook(book) {
     const newBookRead = document.createElement('div');
     const buttonRemoveBook = document.createElement('button');
 
+
+    console.log(book);
     newBookTitle.textContent = book.getTitle();
     newBookTitle.style.pointerEvents = "none";
     newBookTitle.style.fontWeight = 'bold';
@@ -69,7 +72,10 @@ function displayBook(book) {
 }
 
 function initialDisplay() {
+    if (myLibrary === null) myLibrary = [];
+    else {
     myLibrary.forEach(book => displayBook(book));
+    }
 }
 
 function clearForm(formElements) {
@@ -99,6 +105,7 @@ document.addEventListener("click", (e) => {
         let bookToRemove = document.querySelector(`#book-${indexToRemove}`);
         myLibrary.splice(indexToRemove, 1);
         bookToRemove.remove();
+        localSave();
     }
     return;
 })
@@ -174,12 +181,22 @@ function dragElement(elmnt) {
   }
 }
 
-const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
+function localSave() {
+    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function localRestore() {
+    myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+    initialDisplay();
+}
+
+/* const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
 const book3 = new Book('"Chyna"', "Donald J. Trump", 2, false);
 
 addBook(book1);
 addBook(book2);
-addBook(book3);
+addBook(book3); */
+localSave();
 
-initialDisplay();
+localRestore();
