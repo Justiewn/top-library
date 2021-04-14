@@ -1,4 +1,5 @@
 let myLibrary = [];
+let uniqueID = 0;
 
 const bookcase = document.querySelector("#books");
 const newBookDiv = document.querySelector("#new-book-div");
@@ -12,6 +13,7 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.id; 
 }
 
 Book.prototype.info = function() {
@@ -41,6 +43,7 @@ function displayBook(book) {
 
     newBookTitle.textContent = book.getTitle();
     newBookTitle.style.pointerEvents = "none";
+    newBookTitle.style.fontWeight = 'bold';
 
     newBookInfo.textContent = book.info();
     newBookInfo.style.pointerEvents = "none";
@@ -51,11 +54,12 @@ function displayBook(book) {
     buttonRemoveBook.textContent = 'x';
     buttonRemoveBook.classList.add('btn-remove');
 
-    newBookTitle.style.fontWeight = 'bold';
-
     newBook.classList.add('book');
-    newBook.setAttribute("id", `book-${myLibrary.indexOf(book)}`)
-    newBook.setAttribute("data-value", `${myLibrary.indexOf(book)}`)
+    newBook.setAttribute("id", `book-${uniqueID}`)
+    newBook.setAttribute("data-value", `${uniqueID}`)
+    book.id = uniqueID;
+    uniqueID++;
+
     bookcase.insertBefore(newBook, newBookDiv);
     newBook.appendChild(newBookTitle);
     newBook.appendChild(newBookInfo);
@@ -80,11 +84,12 @@ function hideForm(input) {
     popupDiv.setAttribute('style', 'position: inital;');
 }
 
-newBookDiv.addEventListener('click', (e) => {
-    console.log(popupDiv);
-    popupDiv.setAttribute('style', `top: ${e.pageY-40}px; left: ${e.pageX-80}px`);
+function displayForm(e) {
+    popupDiv.setAttribute('style', `top: ${e.pageY-45}px; left: ${e.pageX-80}px`);
     form.style.visibility = 'visible';
-})
+}
+
+newBookDiv.addEventListener('click', (e) => displayForm(e))
 
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-remove")) {
@@ -98,11 +103,8 @@ document.addEventListener("click", (e) => {
 
 document.addEventListener("dblclick", (e) => {
     if (e.target.classList.contains("read-div")) {
-        let indexToChange = e.target.parentNode.getAttribute("data-value");
-        console.log(indexToChange);
-        let bookDomToChange = document.querySelector(`#book-${indexToChange}`);
-        let bookObjectToChange = myLibrary[indexToChange];
-        console.log(bookDomToChange);
+        let bookDom = e.target.parentNode
+        let bookObjectToChange = myLibrary.find(book => book.id == bookDom.getAttribute("data-value"));
         bookObjectToChange.read = !bookObjectToChange.read;
         e.target.textContent = bookObjectToChange.getRead();
     }

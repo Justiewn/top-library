@@ -1,9 +1,9 @@
 body {
-    height: 100vh;
+    height: 96vh;
 }
 
 #content-div {
-    height: 100vh;
+    height: 96vh;
 }
 
 
@@ -98,8 +98,15 @@ input[type=number] {
 
 .btn-remove {
     width: 24px;
+    position: relative;
+
+}
+
+.read-div {
+    margin-top: 10px;
 }
 
 .read-div:hover {
+    
     color: blue;
 }
