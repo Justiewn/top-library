@@ -33,6 +33,7 @@ Book.prototype.getRead = function() {
 
 function addBook(book) {
     myLibrary.push(book);
+    displayBook(book);
     localSave();
 }
 
@@ -43,8 +44,6 @@ function displayBook(book) {
     const newBookRead = document.createElement('div');
     const buttonRemoveBook = document.createElement('button');
 
-
-    console.log(book);
     newBookTitle.textContent = book.getTitle();
     newBookTitle.style.pointerEvents = "none";
     newBookTitle.style.fontWeight = 'bold';
@@ -72,10 +71,7 @@ function displayBook(book) {
 }
 
 function initialDisplay() {
-    if (myLibrary === null) myLibrary = [];
-    else {
     myLibrary.forEach(book => displayBook(book));
-    }
 }
 
 function clearForm(formElements) {
@@ -101,10 +97,10 @@ newBookDiv.addEventListener('click', (e) => displayForm(e))
 
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-remove")) {
-        let indexToRemove = e.target.parentNode.getAttribute("data-value");
-        let bookToRemove = document.querySelector(`#book-${indexToRemove}`);
-        myLibrary.splice(indexToRemove, 1);
-        bookToRemove.remove();
+        let bookDomToRemove = e.target.parentNode
+        let bookObjectToRemove = myLibrary.find(book => book.id == bookDomToRemove.getAttribute("data-value"));
+        myLibrary = myLibrary.filter(book => book !== bookObjectToRemove);
+        bookDomToRemove.remove();
         localSave();
     }
     return;
@@ -129,7 +125,6 @@ form.addEventListener("submit", (e) => {
     read = input[3].checked;
     let newBook = new Book(title, author, pages, read)
     addBook(newBook);
-    displayBook(newBook);
     hideForm(input);
 })
 
@@ -182,21 +177,36 @@ function dragElement(elmnt) {
 }
 
 function localSave() {
+    console.log("saved");
+    console.log(myLibrary);
+    localStorage.setItem("uniqueID", uniqueID);
     localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    
 }
 
 function localRestore() {
-    myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
-    initialDisplay();
+    uniqueID = localStorage.getItem("uniqueID");
+    myLibraryToRebuild = JSON.parse(localStorage.getItem("myLibrary"));
+    if (myLibraryToRebuild === null) {
+        console.log('is now a empty array?');
+        myLibrary = [];
+        return;
+    }
+    myLibraryToRebuild.forEach(item => {
+        addBook(new Book(item.title, item.author, item.pages, item.read));
+    })
 }
 
-/* const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
+localRestore();
+
+const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
 const book3 = new Book('"Chyna"', "Donald J. Trump", 2, false);
 
-addBook(book1);
-addBook(book2);
-addBook(book3); */
-localSave();
 
-localRestore();
+if (myLibrary.length == 0) {
+    console.log("empty");
+    addBook(book1);
+    addBook(book2);
+    addBook(book3);
+}
