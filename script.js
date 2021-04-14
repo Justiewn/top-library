@@ -16,13 +16,17 @@ function Book(title, author, pages, read) {
 
 Book.prototype.info = function() {
     return (`${this.author}
-${this.pages} pages
-${(this.read) ? "Read":"Not read"}`)
+${this.pages} pages`)
 }
 
 Book.prototype.getTitle = function() {
     return (`${this.title}`)
 }
+
+Book.prototype.getRead = function() {
+    return (`${(this.read) ? "Read":"Not read"}`)
+}
+
 
 function addBook(book) {
     myLibrary.push(book);
@@ -32,6 +36,7 @@ function displayBook(book) {
     const newBook = document.createElement('div');
     const newBookTitle = document.createElement('div');
     const newBookInfo = document.createElement('div');
+    const newBookRead = document.createElement('div');
     const buttonRemoveBook = document.createElement('button');
 
     newBookTitle.textContent = book.getTitle();
@@ -39,6 +44,9 @@ function displayBook(book) {
 
     newBookInfo.textContent = book.info();
     newBookInfo.style.pointerEvents = "none";
+
+    newBookRead.textContent = book.getRead();
+    newBookRead.classList.add('read-div');
 
     buttonRemoveBook.textContent = 'x';
     buttonRemoveBook.classList.add('btn-remove');
@@ -51,6 +59,7 @@ function displayBook(book) {
     bookcase.insertBefore(newBook, newBookDiv);
     newBook.appendChild(newBookTitle);
     newBook.appendChild(newBookInfo);
+    newBook.appendChild(newBookRead);
     newBook.appendChild(buttonRemoveBook);
 }
 
@@ -80,14 +89,26 @@ newBookDiv.addEventListener('click', (e) => {
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-remove")) {
         let indexToRemove = e.target.parentNode.getAttribute("data-value");
-        console.log(indexToRemove);
         let bookToRemove = document.querySelector(`#book-${indexToRemove}`);
-        console.log(bookToRemove);
         myLibrary.splice(indexToRemove, 1);
         bookToRemove.remove();
     }
     return;
 })
+
+document.addEventListener("dblclick", (e) => {
+    if (e.target.classList.contains("read-div")) {
+        let indexToChange = e.target.parentNode.getAttribute("data-value");
+        console.log(indexToChange);
+        let bookDomToChange = document.querySelector(`#book-${indexToChange}`);
+        let bookObjectToChange = myLibrary[indexToChange];
+        console.log(bookDomToChange);
+        bookObjectToChange.read = !bookObjectToChange.read;
+        e.target.textContent = bookObjectToChange.getRead();
+    }
+    return;
+})
+
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
