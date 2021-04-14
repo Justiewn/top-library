@@ -26,14 +26,17 @@ body {
 #new-book-div:hover {
     box-shadow: 0 0 5px 3px gray;
     font-size: 90px;
+    font-weight: bold;
 }
 
 #new-book-div p {
     font-size: 40px;
+    color: gray;
+    pointer-events: none;
 }
 
 .book {
-    border: 2px solid black;
+    border: 1px solid black;
     margin: 10px 10px;
     display: flex;
     flex-direction: column;
@@ -50,18 +53,22 @@ body {
     height: 80%;
     min-height: 160px;
     max-height: 200px;
-    box-shadow: 0 0 3px 1px black;
+    box-shadow: 0 0 1px 1px black;
 }
 
 .book:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 5px 3px black;
-    white-space: pre-line;
+    box-shadow: 0 0 5px 1px black;
+}
+
+#popup-div {
+    position:absolute;  
 }
 
 #form-div {
     display: flex;  
     justify-content: center;
+    
 }
 
 
@@ -71,16 +78,18 @@ body {
     border: 1px solid black;
     display: block;
     visibility: hidden;
+    background: whitesmoke;
 }
 
 #form p {
     font-weight: bold;
     text-align: center;
     margin: 5px;
+    pointer-events: none;
 }
 
 input[type=number] {
-    width: 80px;
+    width: 82px;
 }
 
 #btn-submit {

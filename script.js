@@ -3,6 +3,7 @@ let myLibrary = [];
 const bookcase = document.querySelector("#books");
 const newBookDiv = document.querySelector("#new-book-div");
 const form = document.querySelector("#form");
+const popupDiv = document.querySelector("#popup-div");
 const cancelButton = document.querySelector("#btn-cancel");
 const input = form.elements;
 
@@ -62,10 +63,16 @@ function clearForm(formElements) {
 function hideForm(input) {
     clearForm(input);
     form.style.visibility = 'hidden';
+    popupDiv.setAttribute('style', 'position: inital;');
 }
 
-newBookDiv.addEventListener('click', () => {
+newBookDiv.addEventListener('click', (e) => {
+    console.log(popupDiv);
+    popupDiv.setAttribute('style', `top: ${e.pageY-40}px; left: ${e.pageX-80}px`);
     form.style.visibility = 'visible';
+/*     document.addEventListener('click', (e) => {
+        if ()
+    }) */
 })
 
 document.addEventListener("click", (e) => {
