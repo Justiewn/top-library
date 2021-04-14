@@ -52,7 +52,7 @@ function displayBook(book) {
     newBookRead.textContent = book.getRead();
     newBookRead.classList.add('read-div');
 
-    buttonRemoveBook.textContent = 'x';
+    buttonRemoveBook.textContent = '❌';
     buttonRemoveBook.classList.add('btn-remove');
 
     newBook.classList.add('book');
@@ -174,19 +174,9 @@ function dragElement(elmnt) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
-const book3 = new Book("Chyna", "Donald J. Trump", 2, false);
+const book3 = new Book('"Chyna"', "Donald J. Trump", 2, false);
 
 addBook(book1);
 addBook(book2);
