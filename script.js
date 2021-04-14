@@ -35,13 +35,18 @@ function displayBook(book) {
     const buttonRemoveBook = document.createElement('button');
 
     newBookTitle.textContent = book.getTitle();
+    newBookTitle.style.pointerEvents = "none";
+
     newBookInfo.textContent = book.info();
+    newBookInfo.style.pointerEvents = "none";
+
     buttonRemoveBook.textContent = 'x';
     buttonRemoveBook.classList.add('btn-remove');
 
     newBookTitle.style.fontWeight = 'bold';
 
     newBook.classList.add('book');
+    newBook.setAttribute("id", `book-${myLibrary.indexOf(book)}`)
     newBook.setAttribute("data-value", `${myLibrary.indexOf(book)}`)
     bookcase.insertBefore(newBook, newBookDiv);
     newBook.appendChild(newBookTitle);
@@ -70,14 +75,16 @@ newBookDiv.addEventListener('click', (e) => {
     console.log(popupDiv);
     popupDiv.setAttribute('style', `top: ${e.pageY-40}px; left: ${e.pageX-80}px`);
     form.style.visibility = 'visible';
-/*     document.addEventListener('click', (e) => {
-        if ()
-    }) */
 })
 
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-remove")) {
-        console.log("hey");
+        let indexToRemove = e.target.parentNode.getAttribute("data-value");
+        console.log(indexToRemove);
+        let bookToRemove = document.querySelector(`#book-${indexToRemove}`);
+        console.log(bookToRemove);
+        myLibrary.splice(indexToRemove, 1);
+        bookToRemove.remove();
     }
     return;
 })
@@ -101,7 +108,7 @@ cancelButton.addEventListener("click", (e) => {
 
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
-const book3 = new Book("A reeeeeeeeally long title for a book", "A reeeeeeally long name like weewoo", 2, false);
+const book3 = new Book("Chyna", "Donald J. Trump", 2, false);
 
 addBook(book1);
 addBook(book2);
