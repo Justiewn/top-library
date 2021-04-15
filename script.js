@@ -9,12 +9,12 @@ const draggable = document.querySelector("#draggable-div");
 const cancelButton = document.querySelector("#btn-cancel");
 const input = form.elements;
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, id=undefined) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.id; 
+    this.id = id; 
 }
 
 Book.prototype.info = function() {
@@ -58,11 +58,15 @@ function displayBook(book) {
     buttonRemoveBook.classList.add('btn-remove');
 
     newBook.classList.add('book');
-    newBook.setAttribute("id", `book-${uniqueID}`)
-    newBook.setAttribute("data-value", `${uniqueID}`)
-    book.id = uniqueID;
-    uniqueID++;
-
+    if (book.id === undefined) {
+        newBook.setAttribute("id", `book-${uniqueID}`)
+        newBook.setAttribute("data-value", `${uniqueID}`)
+        book.id = uniqueID;
+        uniqueID++;
+    } else {
+        newBook.setAttribute("id", `book-${book.id}`)
+        newBook.setAttribute("data-value", `${book.id}`)
+    }
     bookcase.insertBefore(newBook, newBookDiv);
     newBook.appendChild(newBookTitle);
     newBook.appendChild(newBookInfo);
@@ -112,6 +116,7 @@ document.addEventListener("click", (e) => {
         let bookObjectToChange = myLibrary.find(book => book.id == bookDom.getAttribute("data-value"));
         bookObjectToChange.read = !bookObjectToChange.read;
         e.target.textContent = bookObjectToChange.getRead();
+        localSave();
     }
     return;
 })
@@ -193,7 +198,7 @@ function localRestore() {
         return;
     }
     myLibraryToRebuild.forEach(item => {
-        addBook(new Book(item.title, item.author, item.pages, item.read));
+        addBook(new Book(item.title, item.author, item.pages, item.read, item.id));
     })
 }
 
