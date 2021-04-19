@@ -121,7 +121,6 @@ document.addEventListener("click", (e) => {
     return;
 })
 
-
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     title = input[0].value;
@@ -140,45 +139,42 @@ cancelButton.addEventListener("click", (e) => {
 
 
 
-// Make the DIV element draggable:
+// courtesy of W3Schools
 dragElement(draggable);
 
 function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-    // move the DIV from anywhere inside the DIV:
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
-  
 
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
 
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    popupDiv.style.top = (popupDiv.offsetTop - pos2) + "px";
-    popupDiv.style.left = (popupDiv.offsetLeft - pos1) + "px";
-  }
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        popupDiv.style.top = (popupDiv.offsetTop - pos2) + "px";
+        popupDiv.style.left = (popupDiv.offsetLeft - pos1) + "px";
+    }
 
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+    function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
 }
 
 function localSave() {
@@ -207,7 +203,6 @@ localRestore();
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
 const book3 = new Book('"Chyna"', "Donald J. Trump", 2, false);
-
 
 if (myLibrary.length == 0) {
     console.log("empty");
