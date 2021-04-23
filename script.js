@@ -200,17 +200,18 @@ function localRestore() {
     if (myLibraryToRebuild === null) {
         console.log('is now a empty array?');
         library.myLibrary = [];
+    } else {
+        myLibraryToRebuild.forEach(item => {
+            library.addBook(new Book(item.title, item.author, item.pages, item.read, item.id));
+        })
     }
-    myLibraryToRebuild.forEach(item => {
-        library.addBook(new Book(item.title, item.author, item.pages, item.read, item.id));
-    })
 }
 
 let library = new BookCase();
 localRestore();
 dragElement(draggable);
 
-const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
+const book1 = new Book("Harry Pooper", "J.K. Roller", 369, true);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
 const book3 = new Book('"Chyna"', "Donald J. Trump", 2, false);
 
