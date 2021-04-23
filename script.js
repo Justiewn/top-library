@@ -59,11 +59,14 @@ class BookCase {
     
         newBookRead.textContent = book.getRead();
         newBookRead.classList.add('read-div');
+        setUnselectable(newBookRead);
         this.setReadColor(book, newBook);
     
         buttonRemoveBook.textContent = '❌';
+        buttonRemoveBook.setAttribute("unselectable", 'on');
+        setUnselectable(buttonRemoveBook);
         buttonRemoveBook.classList.add('btn-remove');
-    
+        
         newBook.classList.add('book');
         if (book.id === undefined) {
             newBook.setAttribute("id", `book-${this.uniqueID}`)
@@ -184,6 +187,11 @@ function dragElement(elmnt) {
         document.onmouseup = null;
         document.onmousemove = null;
     }
+}
+
+function setUnselectable(objectDOM) {
+    objectDOM.setAttribute("unselectable", 'on');
+    objectDOM.classList.add('unselectable');
 }
 
 function localSave() {
