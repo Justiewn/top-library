@@ -19,7 +19,7 @@ class Book {
     }
     info() {
         return (`${this.author}
-        ${this.pages} pages`)
+${this.pages} pages`)
     }
     getTitle() {
         return (`${this.title}`)
@@ -59,6 +59,7 @@ class BookCase {
     
         newBookRead.textContent = book.getRead();
         newBookRead.classList.add('read-div');
+        this.setReadColor(book, newBook);
     
         buttonRemoveBook.textContent = '❌';
         buttonRemoveBook.classList.add('btn-remove');
@@ -100,10 +101,17 @@ class BookCase {
         form.style.visibility = 'visible';
     }
 
+    setReadColor(book, bookDOM) {
+        if (book.read) {
+            bookDOM.classList.add('book-read');
+            bookDOM.classList.remove('book-not-read')
+
+        } else {
+            bookDOM.classList.add('book-not-read');
+            bookDOM.classList.add('book-read');
+        }
+    }
 }
-
-
-let library = new BookCase();
 
 // Display pop-up 'Add new book' form
 newBookDiv.addEventListener('click', (e) => library.displayForm(e))
@@ -116,7 +124,6 @@ document.addEventListener("click", (e) => {
         bookDomToRemove.remove();
         localSave();
     }
-    return;
 })
 
 document.addEventListener("click", (e) => {
@@ -125,9 +132,9 @@ document.addEventListener("click", (e) => {
         let bookObjectToChange = library.myLibrary.find(book => book.id == bookDom.getAttribute("data-value"));
         bookObjectToChange.read = !bookObjectToChange.read;
         e.target.textContent = bookObjectToChange.getRead();
+        library.setReadColor(bookObjectToChange,bookDom);
         localSave();
     }
-    return;
 })
 
 form.addEventListener("submit", (e) => {
@@ -146,15 +153,10 @@ cancelButton.addEventListener("click", (e) => {
     library.hideForm(input);
 })
 
-
-
 // courtesy of W3Schools
-dragElement(draggable);
-
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
-
     function dragMouseDown(e) {
         e = e || window.event;
         e.preventDefault();
@@ -165,7 +167,6 @@ function dragElement(elmnt) {
         // call a function whenever the cursor moves:
         document.onmousemove = elementDrag;
     }
-
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
@@ -178,7 +179,6 @@ function dragElement(elmnt) {
         popupDiv.style.top = (popupDiv.offsetTop - pos2) + "px";
         popupDiv.style.left = (popupDiv.offsetLeft - pos1) + "px";
     }
-
     function closeDragElement() {
         // stop moving when mouse button is released:
         document.onmouseup = null;
@@ -200,14 +200,15 @@ function localRestore() {
     if (myLibraryToRebuild === null) {
         console.log('is now a empty array?');
         library.myLibrary = [];
-        return;
     }
     myLibraryToRebuild.forEach(item => {
         library.addBook(new Book(item.title, item.author, item.pages, item.read, item.id));
     })
 }
 
+let library = new BookCase();
 localRestore();
+dragElement(draggable);
 
 const book1 = new Book("Harry Pooper", "J.K. Roller", 369, false);
 const book2 = new Book("Of Mac and Cheese", "M.C. Donald", 144, true);
